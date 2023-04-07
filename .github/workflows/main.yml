@@ -52,4 +52,6 @@ jobs:
               sudo rm -rf /home/ubuntu/tmp
 
               sudo mkdir poject/
+
+
               sudo cp -r tmp/* project/
