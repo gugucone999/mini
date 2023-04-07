@@ -1,0 +1,39 @@
+name: 'Deploy'
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: 'Deploy'
+    runs-on: ubuntu-latest
+    environment: production
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: SSH Commands
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.AWS_SSH_HOST }}
+        username: ${{ secrets.AWS_SSH_USERNAME }}
+        key: ${{ secrets.AWS_SSH_KEY }}
+        port: ${{ secrets.AWS_SSH_PORT }}
+        script_stop: true
+        script: |
+          sudo git clone https://github.com/바꾸세요 tmp
+          sudo cp -r tmp/* 3tier/
+          sudo ls -al
+          sudo sh 3tier/run.sh
+          sudo rm -rf tmp
