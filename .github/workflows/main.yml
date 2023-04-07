@@ -51,3 +51,4 @@ jobs:
 
               sudo rm -rf /home/ubuntu/tmp
 
+              sudo git clone https://github.com/gugucone999/mini-project.git tmp
