@@ -32,7 +32,7 @@ jobs:
         port: ${{ secrets.AWS_SSH_PORT }}
         script_stop: true
         script: |
-          sudo git clone https://github.com/바꾸세요 tmp
+          sudo git clone https://github.com/gugucone999/mini-project.git tmp
           sudo cp -r tmp/* 3tier/
           sudo ls -al
           sudo sh 3tier/run.sh
