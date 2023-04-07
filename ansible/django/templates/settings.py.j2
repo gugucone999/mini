@@ -156,7 +156,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     },
 # }
 
-{% set endpoint_address = lookup('file', 'elasticache.json') | from_json | json_query('CacheClusters[0].CacheNodes[0].Endpoint.Address') %}
+{% set endpoint_address = lookup('file', '/home/ubuntu/elasticache.json') | from_json | json_query('CacheClusters[0].CacheNodes[0].Endpoint.Address') %}
 
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
