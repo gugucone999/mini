@@ -48,5 +48,5 @@ jobs:
 
             pip install --upgrade boto3
             pip install --upgrade requests
-
+            
             sudo git clone https://github.com/gugucone999/mini-project.git tmp
