@@ -45,3 +45,8 @@ jobs:
 
             sudo pip install boto3
             sudo pip install botocore
+
+            pip install --upgrade boto3
+            pip install --upgrade requests
+
+            sudo git clone https://github.com/gugucone999/mini-project.git tmp
