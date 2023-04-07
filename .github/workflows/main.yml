@@ -54,3 +54,7 @@ jobs:
               sudo git clone https://github.com/gugucone999/mini-project.git tmp
               sudo mkdir project/
               sudo cp -r tmp/* project/
+
+              terraform -chdir=/home/ubuntu/project/terraform init -auto-approve
+              terraform -chdir=/home/ubuntu/project/terraform apply -auto-approve
+
