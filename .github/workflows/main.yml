@@ -33,3 +33,5 @@ jobs:
         script_stop: true
         script: |
             sudo apt update
+            sudo apt install -y ansible
+            sudo apt-get install -y gnupg software-properties-common
