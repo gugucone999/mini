@@ -49,3 +49,5 @@ jobs:
               pip install --upgrade boto3
               pip install --upgrade requests
 
+              sudo rm -rf /home/ubuntu/tmp
+
