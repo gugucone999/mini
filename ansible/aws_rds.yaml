@@ -1,0 +1,8 @@
+---
+plugin: aws_rds
+
+regions:
+  - ap-northeast-2
+keyed_groups:
+  - key: tags
+    prefix: tag
