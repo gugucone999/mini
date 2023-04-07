@@ -52,6 +52,6 @@ jobs:
               sudo rm -rf /project
               sudo git clone https://github.com/gugucone999/mini-project.git /project
 
-              terraform -chdir=/project/terraform init
-              terraform -chdir=/project/terraform apply -auto-approve
+              sudo terraform -chdir=/project/terraform init
+              sudo terraform -chdir=/project/terraform apply -auto-approve
 
