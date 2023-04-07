@@ -55,3 +55,6 @@ jobs:
               sudo terraform -chdir=/project/terraform init
               sudo terraform -chdir=/project/terraform apply -auto-approve
 
+              sudo aws elasticache describe-cache-clusters \
+              --cache-cluster-id ec-project \
+              --show-cache-node-info > /home/ubuntu/elasticache.json

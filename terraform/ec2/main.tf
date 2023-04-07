@@ -2,18 +2,18 @@ module "module_vpc" {
   source = "../vpc"
 }
 
-resource "aws_instance" "my_play" {
-  ami           = var.my_server_ami
-  instance_type = var.my_server_type
+# resource "aws_instance" "my_play" {
+#   ami           = var.my_server_ami
+#   instance_type = var.my_server_type
 
-  vpc_security_group_ids = [ "${module.module_vpc.my_django_sg_id}" ]
-  subnet_id = "${module.module_vpc.my-vpc-project-subnet1_id}"
-  key_name = "project"
+#   vpc_security_group_ids = [ "${module.module_vpc.my_django_sg_id}" ]
+#   subnet_id = "${module.module_vpc.my-vpc-project-subnet1_id}"
+#   key_name = "project"
 
-  tags = {
-    group = "play"
-  }
-}
+#   tags = {
+#     group = "play"
+#   }
+# }
 
 resource "aws_instance" "my_django" {
   count                   = 2
