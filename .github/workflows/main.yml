@@ -33,14 +33,14 @@ jobs:
         script_stop: true
         script: |
             sudo su - root
-             sudo apt update
-             sudo apt install -y ansible
-             sudo apt-get install -y gnupg software-properties-common
+              sudo apt update
+              sudo apt install -y ansible
+              sudo apt-get install -y gnupg software-properties-common
         
-             wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+              wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
               echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
               sudo apt update
-               sudo apt-get install -y terraform unzip
+              sudo apt-get install -y terraform unzip
               sudo apt-get install python3-pip
 
               sudo pip install boto3
@@ -52,5 +52,5 @@ jobs:
               sudo rm -rf /home/ubuntu/tmp
 
               sudo git clone https://github.com/gugucone999/mini-project.git tmp
-              sudo mkdir poject/
+              sudo mkdir project/
               sudo cp -r tmp/* project/
