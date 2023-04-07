@@ -49,7 +49,3 @@ jobs:
               pip install --upgrade boto3
               pip install --upgrade requests
 
-              sudo rm -rf /home/ubuntu/tmp
-
-              sudo git clone https://github.com/gugucone999/mini-project.git tmp
-              sudo cp -r tmp/* project/
