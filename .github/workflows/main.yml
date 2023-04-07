@@ -42,3 +42,6 @@ jobs:
             sudo apt update
             sudo apt-get install -y terraform unzip
             sudo apt-get install python3-pip
+
+            sudo pip install boto3
+            sudo pip install botocore
