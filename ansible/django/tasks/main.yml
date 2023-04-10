@@ -40,7 +40,7 @@
 
 - name: git clon
   git:
-    repo: https://github.com/gugucone999/django-project.git
+    repo: https://github.com/gugucone999/django.git
     dest: /django_project
     update: yes
   become: yes
