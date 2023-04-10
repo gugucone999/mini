@@ -1,5 +1,7 @@
 #!/bin/bash
 
+terraform -chdir=/project/terraform/ init
+
 terraform -chdir=/project/terraform/ apply -auto-approve
 
 sudo aws elasticache describe-cache-clusters \
