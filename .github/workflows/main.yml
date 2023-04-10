@@ -23,6 +23,17 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Check for changes
+      run: |
+        git fetch
+        if git diff --quiet HEAD $(git rev-parse origin/master); then
+          echo "::set-output name=changes::no"
+        else
+          echo "::set-output name=changes::yes"
+        fi
+      id: changes
+
+
     - name: SSH Commands
       uses: appleboy/ssh-action@v0.1.6
       with:
@@ -39,6 +50,6 @@ jobs:
           sudo cp -r /tmp/* /project
           sudo ls -al
           sudo sh /project/run.sh
-          sudo rm -rf /tmp
+
 
           
