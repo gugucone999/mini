@@ -33,6 +33,7 @@ jobs:
         script_stop: true
         script: |
           sudo rm -rf /tmp
+          sudo rm -rf /project
           sudo mkdir /project
           sudo git clone https://github.com/gugucone999/mini.git /tmp
           sudo cp -r /tmp/* /project
