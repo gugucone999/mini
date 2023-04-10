@@ -1,9 +1,9 @@
 #!/bin/bash
 
-terraform -chdir=/3tier/terraform/ apply -auto-approve
+terraform -chdir=/project/terraform/ apply -auto-approve
 
 sudo aws elasticache describe-cache-clusters \
  --cache-cluster-id ec-project \
- --show-cache-node-info > elasticache.json
+ --show-cache-node-info > /home/ubuntu/elasticache.json
 
-ansible-playbook -i /3tier/ansible/aws_rds.yaml -i /3tier/ansible/aws_ec2.yaml  /3tier/ansible/playbook --user ubuntu
+ansible-playbook -i /project/ansible/aws_rds.yaml -i /project/ansible/aws_ec2.yaml  /project/ansible/playbook --user ubuntu

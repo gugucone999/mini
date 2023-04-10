@@ -32,12 +32,10 @@ jobs:
         port: ${{ secrets.AWS_SSH_PORT }}
         script_stop: true
         script: |
-          sudo rm -rf /project
 
-          sudo git clone https://github.com/gugucone999/mini.git /project
-          sudo terraform -chdir=/project/terraform init
-          sudo terraform -chdir=/project/terraform apply -auto-approve
-          sudo aws elasticache describe-cache-clusters \
-            --cache-cluster-id ec-project \
-            --show-cache-node-info > /home/ubuntu/elasticache.json
-          sudo ansible-playbook -i /project/ansible/aws_rds.yaml -i /project/ansible/aws_ec2.yaml  /project/ansible/playbook --user ubuntu
+          sudo git clone https://github.com/gugucone999/mini.git tmp
+          sudo cp -r tmp/* project/
+          sudo ls -al
+          sudo sh project/run.sh
+          sudo rm -rf tmp
+          
