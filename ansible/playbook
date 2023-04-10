@@ -1,5 +1,5 @@
 - hosts: ["django_group_django"]
   vars:
-    ansible_ssh_private_key_file: "/django/project.pem"
+    ansible_ssh_private_key_file: "/home/ubuntu/mini/project.pem"
   roles:
   - role: django
