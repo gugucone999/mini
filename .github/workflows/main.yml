@@ -34,9 +34,10 @@ jobs:
         port: ${{ secrets.AWS_SSH_PORT }}
         script_stop: true
         script: |
+          sudo rm -rf /project/*
           sudo rm -rf tmp
           sudo git clone https://github.com/gugucone999/mini.git tmp
-          sudo cp -r tmp/* project/
-          sudo ls -al
-          sudo sh project/run.sh
+          sudo cp -r tmp/* /project/
+          sudo ls -al /project
+          sudo sh /project/run.sh
           sudo rm -rf tmp
