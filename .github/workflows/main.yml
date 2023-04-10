@@ -1,55 +1,42 @@
-name: 'Deploy'
+name: Deploy with Terraform and Ansible
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-
-permissions:
-  contents: read
+    branches:
+      - main
 
 jobs:
   deploy:
-    name: 'Deploy'
     runs-on: ubuntu-latest
-    environment: production
-
-    defaults:
-      run:
-        shell: bash
 
     steps:
-    # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Check for changes
-      run: |
-        git fetch
-        if git diff --quiet HEAD $(git rev-parse origin/master); then
-          echo "::set-output name=changes::no"
-        else
-          echo "::set-output name=changes::yes"
-        fi
-      id: changes
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
 
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ansible
+          wget https://releases.hashicorp.com/terraform/1.0.5/terraform_1.0.5_linux_amd64.zip
+          unzip terraform_1.0.5_linux_amd64.zip
+          sudo mv terraform /usr/local/bin/
 
-    - name: SSH Commands
-      uses: appleboy/ssh-action@v0.1.6
-      with:
-        host: ${{ secrets.AWS_SSH_HOST }}
-        username: ${{ secrets.AWS_SSH_USERNAME }}
-        key: ${{ secrets.AWS_SSH_KEY }}
-        port: ${{ secrets.AWS_SSH_PORT }}
-        script_stop: true
-        script: |
-          sudo rm -rf /tmp
-          sudo rm -rf /project
-          sudo mkdir /project
-          sudo git clone https://github.com/gugucone999/mini.git /tmp
-          sudo cp -r /tmp/* /project
-          sudo ls -al
-          sudo sh /project/run.sh
+      - name: Deploy infrastructure
+        run: |
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ubuntu@<13.209.4.108> 'cd ~/terraform; terraform init; terraform apply --auto-approve'
 
+      - name: Configure Ansible inventory
+        run: |
+          echo "[webserver]" > inventory
+          echo "<13.209.4.108>" >> inventory
 
-          
+      - name: Deploy application with Ansible
+        run: |
+          ansible-playbook -i inventory playbook.yml --private-key ~/.ssh/id_rsa --user ubuntu
