@@ -159,9 +159,6 @@ resource "aws_db_instance" "my-db-slave" {
   password               = "qwer1234"
   skip_final_snapshot    = true
   multi_az               = false
-
-  replicate_source_db {
-    identifier = aws_db_instance.my-db-master.id
-    region     = data.aws_region.current.name
-  }
+  source_db_instance_identifier = aws_db_instance.my-db-master.id
+  source_region                 = data.aws_region.current.name
 }
