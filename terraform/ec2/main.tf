@@ -144,18 +144,9 @@ resource "aws_db_instance" "my-master" {
 }
 
 resource "aws_db_instance" "my-read-replica" {
-  count = 1
-
-  # 마스터 RDS의 정보
-  source_db_instance_identifier = aws_db_instance.my-master.identifier
-  # source_region                 = aws_db_instance.my-master.region
-
-  # 복제본 설정
-  instance_class                = "db.t3.micro"
-  identifier                    = "my-read-replica"
-  db_subnet_group_name          = aws_db_subnet_group.my_db_subnet_group.name
-  vpc_security_group_ids        = [ "${module.module_vpc.my_db_sg_id}" ]
-  publicly_accessible           = false
-  auto_minor_version_upgrade    = true
-  replica_mode                  = "open-read-only"
+  source_db_instance_identifier = aws_db_instance.my-master.id
+  db_subnet_group_name = aws_db_subnet_group.my_db_subnet_group.name
+  instance_class = "db.t3.micro"
+  publicly_accessible = false
+  replica_mode = "open-read-only"
 }
