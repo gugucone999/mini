@@ -146,7 +146,6 @@ resource "aws_db_instance" "my-master" {
 resource "aws_db_instance" "my-read-replica" {
   count = 1
   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
-  db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
   replicate_source_db = aws_db_instance.my-master.identifier
   instance_class       = "db.t3.micro"
   identifier           = "my-read-replica-${count.index}"
