@@ -1,12 +1,12 @@
 # - hosts: ["tag_group_django"]
 #   vars:
-#     ansible_ssh_private_key_file: "/home/ubuntu/mini/project.pem"
+#     ansible_ssh_private_key_file: "/home/ubuntu/project.pem"
 #   roles:
 #   - role: django
 
 
 - hosts: ["tag_group_redis"]
   vars:
-    ansible_ssh_private_key_file: "/home/ubuntu/mini/project.pem"
+    ansible_ssh_private_key_file: "/home/ubuntu/project.pem"
   roles:
   - role: redis
