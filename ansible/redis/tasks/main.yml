@@ -1,0 +1,22 @@
+ 
+- name: print
+  debug:
+    msg: "{{ ansible_facts.default_ipv4.address }}"
+  become: yes
+
+- name: Add deadsnakes PPA
+  apt_repository:
+    repo: ppa:deadsnakes/ppa
+    state: present
+  become: yes
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: Install Redis
+  apt:
+    name: redis
+    state: present
+  become: yes
