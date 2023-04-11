@@ -1,11 +1,11 @@
-# - hosts: ["django_group_django"]
+# - hosts: ["tag_group_django"]
 #   vars:
 #     ansible_ssh_private_key_file: "/home/ubuntu/mini/project.pem"
 #   roles:
 #   - role: django
 
 
-- hosts: ["django_group_redis"]
+- hosts: ["tag_group_redis"]
   vars:
     ansible_ssh_private_key_file: "/home/ubuntu/mini/terraform.pem"
   roles:
