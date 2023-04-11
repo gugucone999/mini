@@ -41,3 +41,4 @@ resource "aws_db_instance" "my-master" {
   multi_az             = false
   backup_retention_period = 7
 }
+
