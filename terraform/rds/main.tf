@@ -39,5 +39,5 @@ resource "aws_db_instance" "my-master" {
   publicly_accessible  = true
   skip_final_snapshot  = true
   multi_az             = false
-  backup_retention_period = 7 # 일주일 동안 백업 보존
+  backup_retention_period = 15 # 일주일 동안 백업 보존
 }
