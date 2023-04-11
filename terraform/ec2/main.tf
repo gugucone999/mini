@@ -150,8 +150,6 @@ resource "aws_db_instance" "my-read-replica" {
   replicate_source_db = aws_db_instance.my-master.identifier
   instance_class       = "db.t3.micro"
   identifier           = "my-read-replica-${count.index}"
-  username             = "admin"
-  password             = "qwer1234"
   publicly_accessible  = true
   skip_final_snapshot  = true
   multi_az = false
