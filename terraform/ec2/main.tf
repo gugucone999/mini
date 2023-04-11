@@ -33,9 +33,7 @@ resource "aws_instance" "my_django" {
     Name  = "my_django-${count.index}"
     group = "django"
   }
-
-
-
+}
 
 # resource "aws_lb" "django" {
 #   name     = "my-lb"
