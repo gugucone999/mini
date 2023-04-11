@@ -140,4 +140,5 @@ resource "aws_db_instance" "my-db" {
   publicly_accessible  = true
   skip_final_snapshot  = true
   multi_az = false
+  backup_retention_period = 7
 }
