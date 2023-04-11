@@ -161,6 +161,7 @@ resource "aws_db_instance" "my-db-slave" {
   multi_az               = false
 
   replicate_source_db {
-    source_db_instance_identifier = aws_db_instance.my-db-master.id
+    identifier = aws_db_instance.my-db-master.id
+    region     = data.aws_region.current.name
   }
 }
