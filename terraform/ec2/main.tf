@@ -154,17 +154,12 @@ resource "aws_db_instance" "my-db-slave" {
   instance_class               = "db.t2.micro"
   allocated_storage            = 20
   name                         = "my-db-slave"
-  username                     = "slave"
-  password                     = "qwer123"
+  username                     = "admin" # 마스터 인스턴스와 같은 사용자 이름
+  password                     = "qwer1234" # 마스터 인스턴스와 같은 비밀번호
   db_subnet_group_name         = aws_db_subnet_group.my_db_subnet_group.name
   vpc_security_group_ids       = [ "${module.module_vpc.my_db_sg_id}" ]
   identifier_prefix            = "my-db-slave"
   skip_final_snapshot          = true
-  replica_mode                 = true
-  replication_source_identifier = aws_db_instance.my-db-master.id
-  replication_subnet_group_id  = aws_db_subnet_group.my_db_subnet_group.id
-
-  tags = {
-    Name = "my-db-slave"
-  }
+  replica_of                   = aws_db_instance.my-db-master.id # 마스터 인스턴스 ID
+  create_replica               = true
 }
