@@ -16,7 +16,7 @@ module "module_vpc" {
 # }
 
 resource "aws_instance" "my_django" {
-  count                   = 2
+  count                   = 4
   ami                     = var.my_server_ami
   instance_type           = var.my_server_type
   vpc_security_group_ids  = [ "${module.module_vpc.my_django_sg_id}" ]
@@ -75,17 +75,13 @@ resource "aws_lb_listener" "django" {
 }
 
 
+
 resource "aws_lb_target_group_attachment" "django" {
-  for_each = {
-    for instance in aws_instance.my_django :
-    instance.id => instance if regex("my_django.*", instance.tags["Name"]) == true
-  }
+  count = 100
   target_group_arn = aws_lb_target_group.django.arn
-  target_id        = each.value.id
+  target_id        = element(aws_instance.my_django.*.id, count.index)
   port             = 80
 }
-
-
 
 
 resource "aws_elasticache_subnet_group" "ec_subnet_group" {
