@@ -143,10 +143,3 @@ resource "aws_db_instance" "my-master" {
   backup_retention_period = 7
 }
 
-resource "aws_db_instance" "my-read-replica" {
-  source_db_instance_identifier = aws_db_instance.my-master.id
-  db_subnet_group_name = aws_db_subnet_group.my_db_subnet_group.name
-  instance_class = "db.t3.micro"
-  publicly_accessible = false
-  replica_mode = "open-read-only"
-}
