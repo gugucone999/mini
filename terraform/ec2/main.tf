@@ -156,7 +156,7 @@ resource "aws_db_instance" "my-db-slave" {
   username                     = var.db_username
   password                     = var.db_password
   db_subnet_group_name         = aws_db_subnet_group.my_db_subnet_group.name
-  vpc_security_group_ids       = [aws_security_group.db_security_group.id]
+  vpc_security_group_ids       = [ "${module.module_vpc.my_db_sg_id}" ]
   identifier_prefix            = "my-db-slave"
   skip_final_snapshot          = true
   replica_mode                 = true
