@@ -114,7 +114,7 @@ resource "aws_elasticache_replication_group" "ec_replication_group" {
   parameter_group_name       = "default.redis7"
   port                       = 6379
   security_group_ids         =  [ "${module.module_vpc.my_redis_sg_id}" ]
-  engine_version             = "6.x"
+  engine_version             = "7.0"
   engine                     = "redis"
 }
 
