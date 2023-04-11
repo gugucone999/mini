@@ -21,7 +21,7 @@ resource "aws_instance" "Redis_check" {
 
 
 resource "aws_instance" "my_django" {
-  count                   = 3
+  count                   = 1
   ami                     = var.my_server_ami
   instance_type           = var.my_server_type
   vpc_security_group_ids  = [ "${module.module_vpc.my_django_sg_id}" ]
@@ -94,31 +94,31 @@ resource "aws_elasticache_subnet_group" "ec_subnet_group" {
 
 # 단일 ec 만들때 사용!
 
-# resource "aws_elasticache_cluster" "ec_cluster" {
-#   cluster_id           = "ec-project"
-#   engine               = "redis"
-#   node_type            = "cache.t2.micro"
-#   num_cache_nodes      = 1
-#   parameter_group_name = "default.redis7"
-#   engine_version       = "7.0"
-#   port                 = 6379
-#   subnet_group_name    = aws_elasticache_subnet_group.ec_subnet_group.name
-#   security_group_ids   = [ "${module.module_vpc.my_redis_sg_id}" ]
-# }
-
-resource "aws_elasticache_replication_group" "ec_replication_group" {
-  replication_group_id       =  "ec-replication-group"
-  description = "ElastiCache Redis Replication Group"
-  node_type                  = "cache.t2.micro"
-  num_cache_clusters      = 2
-  automatic_failover_enabled = true
-  subnet_group_name          = aws_elasticache_subnet_group.ec_subnet_group.name
-  parameter_group_name       = "default.redis7"
-  port                       = 6379
-  security_group_ids         =  [ "${module.module_vpc.my_redis_sg_id}" ]
-  engine_version             = "7.0"
-  engine                     = "redis"
+resource "aws_elasticache_cluster" "ec_cluster" {
+  cluster_id           = "ec-project"
+  engine               = "redis"
+  node_type            = "cache.t2.micro"
+  num_cache_nodes      = 1
+  parameter_group_name = "default.redis7"
+  engine_version       = "7.0"
+  port                 = 6379
+  subnet_group_name    = aws_elasticache_subnet_group.ec_subnet_group.name
+  security_group_ids   = [ "${module.module_vpc.my_redis_sg_id}" ]
 }
+
+# resource "aws_elasticache_replication_group" "ec_replication_group" {
+#   replication_group_id       =  "ec-replication-group"
+#   description = "ElastiCache Redis Replication Group"
+#   node_type                  = "cache.t2.micro"
+#   num_cache_clusters      = 2
+#   automatic_failover_enabled = true
+#   subnet_group_name          = aws_elasticache_subnet_group.ec_subnet_group.name
+#   parameter_group_name       = "default.redis7"
+#   port                       = 6379
+#   security_group_ids         =  [ "${module.module_vpc.my_redis_sg_id}" ]
+#   engine_version             = "7.0"
+#   engine                     = "redis"
+# }
 
 resource "aws_db_subnet_group" "my_db_subnet_group" {
   name       = "my-db-subnet-group"
