@@ -148,6 +148,14 @@ resource "aws_db_instance" "my-db-master" {
   multi_az               = false
 }
 
+variable "db_username" {
+  description = "slave"
+}
+
+variable "db_password" {
+  description = "qwer1234"
+}
+
 resource "aws_db_instance" "my-db-slave" {
   engine                       = "mysql"
   instance_class               = "db.t2.micro"
