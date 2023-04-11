@@ -77,12 +77,9 @@ resource "aws_lb_listener" "django" {
 
 
 resource "aws_lb_target_group_attachment" "django" {
-  for_each = {
-    for instance in aws_instance.my_django :
-    instance.id => instance if regex("^my_django-", instance.tags["Name"]) == true
-  }
+  count = 4
   target_group_arn = aws_lb_target_group.django.arn
-  target_id        = each.value.id
+  target_id        = element(aws_instance.my_django.*.id, count.index)
   port             = 80
 }
 
