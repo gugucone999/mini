@@ -149,16 +149,21 @@ resource "aws_db_instance" "my-db-master" {
 }
 
 resource "aws_db_instance" "my-db-slave" {
-  vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
-  db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
-  instance_class         = "db.t3.micro"
-  identifier             = "mydb-slave"
-  engine                 = "mysql"
-  engine_version         = "8.0.32"
-  username               = "admin"
-  password               = "qwer1234"
-  skip_final_snapshot    = true
-  multi_az               = false
-  source_db_instance_identifier = aws_db_instance.my-db-master.id
-  source_region                 = data.aws_region.current.name
+  engine                       = "mysql"
+  instance_class               = "db.t2.micro"
+  allocated_storage            = 20
+  name                         = "my-db-slave"
+  username                     = var.db_username
+  password                     = var.db_password
+  db_subnet_group_name         = aws_db_subnet_group.my_db_subnet_group.name
+  vpc_security_group_ids       = [aws_security_group.db_security_group.id]
+  identifier_prefix            = "my-db-slave"
+  skip_final_snapshot          = true
+  replica_mode                 = true
+  replication_source_identifier = aws_db_instance.my-db-master.id
+  replication_subnet_group_id  = aws_db_subnet_group.my_db_subnet_group.id
+
+  tags = {
+    Name = "my-db-slave"
+  }
 }
