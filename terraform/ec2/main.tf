@@ -103,63 +103,24 @@ resource "aws_elasticache_cluster" "ec_cluster" {
   security_group_ids   = [ "${module.module_vpc.my_redis_sg_id}" ]
 }
 
-# resource "aws_db_subnet_group" "my_db_subnet_group" {
-#   name       = "my-db-subnet-group"
-#   subnet_ids = ["${module.module_vpc.my-vpc-project-subnet1_id}", "${module.module_vpc.my-vpc-project-subnet2_id}"]
-# }
-
-# resource "aws_db_instance" "my-db" {
-#   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
-#   db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
-#   allocated_storage    = 20
-#   identifier           = "mydb"
-#   db_name              = "web"
-#   engine               = "mysql"
-#   engine_version       = "8.0.32"
-#   instance_class       = "db.t3.micro"
-#   username             = "admin"
-#   password             = "qwer1234"
-#   parameter_group_name = "default.mysql8.0"
-#   publicly_accessible  = true
-#   skip_final_snapshot  = true
-#   multi_az = false
-# }
-
-
 resource "aws_db_subnet_group" "my_db_subnet_group" {
   name       = "my-db-subnet-group"
   subnet_ids = ["${module.module_vpc.my-vpc-project-subnet1_id}", "${module.module_vpc.my-vpc-project-subnet2_id}"]
 }
 
-resource "aws_db_instance" "my-db-master" {
+resource "aws_db_instance" "my-db" {
   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
   db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
-  allocated_storage      = 20
-  identifier             = "mydb-master"
-  db_name                = "web"
-  engine                 = "mysql"
-  engine_version         = "8.0.32"
-  instance_class         = "db.t3.micro"
-  username               = "admin"
-  password               = "qwer1234"
-  parameter_group_name   = "default.mysql8.0"
-  publicly_accessible    = true
-  skip_final_snapshot    = true
-  multi_az               = false
-}
-
-
-resource "aws_db_instance" "my-db-slave" {
-  engine                       = "mysql"
-  instance_class               = "db.t2.micro"
-  allocated_storage            = 20
-  name                         = "my-db-slave"
-  username                     = "admin" # 마스터 인스턴스와 같은 사용자 이름
-  password                     = "qwer1234" # 마스터 인스턴스와 같은 비밀번호
-  db_subnet_group_name         = aws_db_subnet_group.my_db_subnet_group.name
-  vpc_security_group_ids       = [ "${module.module_vpc.my_db_sg_id}" ]
-  identifier_prefix            = "my-db-slave"
-  skip_final_snapshot          = true
-  replica_of                   = aws_db_instance.my-db-master.id # 마스터 인스턴스 ID
-  create_replica               = true
+  allocated_storage    = 20
+  identifier           = "mydb"
+  db_name              = "web"
+  engine               = "mysql"
+  engine_version       = "8.0.32"
+  instance_class       = "db.t3.micro"
+  username             = "admin"
+  password             = "qwer1234"
+  parameter_group_name = "default.mysql8.0"
+  publicly_accessible  = true
+  skip_final_snapshot  = true
+  multi_az = false
 }
