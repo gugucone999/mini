@@ -5,6 +5,7 @@ module "module_vpc" {
 
 
 resource "aws_instance" "Redis_check" {
+  count                   = 1
   ami           = var.my_server_ami
   instance_type = var.my_server_type
 
@@ -13,6 +14,7 @@ resource "aws_instance" "Redis_check" {
   key_name = "project"
 
   tags = {
+    Name  = "redis-${count.index}"
     group = "redis"
   }
 }
@@ -30,7 +32,7 @@ resource "aws_instance" "my_django" {
   # subnet_id               = "${module.module_vpc.my-vpc-project-subnet1_id}"
 
   tags = {
-    Name  = "my_django-${count.index}"
+    Name  = "my-django-${count.index}"
     group = "django"
   }
 }
