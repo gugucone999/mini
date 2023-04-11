@@ -20,22 +20,22 @@ module "module_vpc" {
 # }
 
 
-resource "aws_instance" "my_django" {
-  count                   = 1
-  ami                     = var.my_server_ami
-  instance_type           = var.my_server_type
-  vpc_security_group_ids  = [ "${module.module_vpc.my_django_sg_id}" ]
-  subnet_id               = element([module.module_vpc.my-vpc-project-subnet1_id,
-                                     module.module_vpc.my-vpc-project-subnet3_id,
-                                    ], count.index)
-  key_name                = "project"
-  # subnet_id               = "${module.module_vpc.my-vpc-project-subnet1_id}"
+# resource "aws_instance" "my_django" {
+#   count                   = 1
+#   ami                     = var.my_server_ami
+#   instance_type           = var.my_server_type
+#   vpc_security_group_ids  = [ "${module.module_vpc.my_django_sg_id}" ]
+#   subnet_id               = element([module.module_vpc.my-vpc-project-subnet1_id,
+#                                      module.module_vpc.my-vpc-project-subnet3_id,
+#                                     ], count.index)
+#   key_name                = "project"
+#   # subnet_id               = "${module.module_vpc.my-vpc-project-subnet1_id}"
 
-  tags = {
-    Name  = "my-django-${count.index}"
-    group = "django"
-  }
-}
+#   tags = {
+#     Name  = "my-django-${count.index}"
+#     group = "django"
+#   }
+# }
 
 # resource "aws_lb" "django" {
 #   name     = "my-lb"
@@ -125,7 +125,7 @@ resource "aws_db_subnet_group" "my_db_subnet_group" {
   subnet_ids = ["${module.module_vpc.my-vpc-project-subnet1_id}", "${module.module_vpc.my-vpc-project-subnet2_id}"]
 }
 
-resource "aws_db_instance" "my-db" {
+resource "aws_db_instance" "my-master" {
   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
   db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
   allocated_storage    = 20
@@ -141,4 +141,21 @@ resource "aws_db_instance" "my-db" {
   skip_final_snapshot  = true
   multi_az = false
   backup_retention_period = 7
+}
+
+resource "aws_db_instance" "my-read-replica" {
+  count = 1
+
+  # 마스터 RDS의 정보
+  source_db_instance_identifier = aws_db_instance.my-master.identifier
+  # source_region                 = aws_db_instance.my-master.region
+
+  # 복제본 설정
+  instance_class                = "db.t3.micro"
+  identifier                    = "my-read-replica"
+  db_subnet_group_name          = aws_db_subnet_group.my_db_subnet_group.name
+  vpc_security_group_ids        = [ "${module.module_vpc.my_db_sg_id}" ]
+  publicly_accessible           = false
+  auto_minor_version_upgrade    = true
+  replica_mode                  = "open-read-only"
 }
