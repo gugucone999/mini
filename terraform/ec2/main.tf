@@ -148,7 +148,6 @@ resource "aws_db_instance" "my-read-replica" {
 
   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
   db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
-  source_db_instance_identifier = "slave"
   instance_class       = "db.t3.micro"
   identifier           = "my-read-replica-${count.index}"
   username             = "admin"
