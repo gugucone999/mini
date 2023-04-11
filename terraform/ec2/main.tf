@@ -148,21 +148,14 @@ resource "aws_db_instance" "my-db-master" {
   multi_az               = false
 }
 
-variable "db_username" {
-  description = "slave"
-}
-
-variable "db_password" {
-  description = "qwer1234"
-}
 
 resource "aws_db_instance" "my-db-slave" {
   engine                       = "mysql"
   instance_class               = "db.t2.micro"
   allocated_storage            = 20
   name                         = "my-db-slave"
-  username                     = var.db_username
-  password                     = var.db_password
+  username                     = "slave"
+  password                     = "qwer123"
   db_subnet_group_name         = aws_db_subnet_group.my_db_subnet_group.name
   vpc_security_group_ids       = [ "${module.module_vpc.my_db_sg_id}" ]
   identifier_prefix            = "my-db-slave"
