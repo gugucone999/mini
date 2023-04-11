@@ -105,8 +105,8 @@ resource "aws_elasticache_subnet_group" "ec_subnet_group" {
 # }
 
 resource "aws_elasticache_replication_group" "ec_replication_group" {
-  replication_group_id       = "ec-project"
-  replication_group_description = "ElastiCache Redis Replication Group"
+  replication_group_id       =  "ec-replication-group"
+  description = "ElastiCache Redis Replication Group"
   node_type                  = "cache.t2.micro"
   number_cache_clusters      = 2
   automatic_failover_enabled = true
