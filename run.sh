@@ -2,7 +2,9 @@
 
 terraform -chdir=project/terraform/ init
 
-terraform -chdir=project/terraform/ apply -auto-approve  -lock-timeout=0s
+export TF_CLI_TIMEOUT=0
+
+terraform -chdir=project/terraform/ apply -auto-approve 
 
 # sudo aws elasticache describe-cache-clusters \
 #  --cache-cluster-id ec-project \
