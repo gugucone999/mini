@@ -118,7 +118,7 @@ resource "aws_elasticache_replication_group" "ec_replication_group" {
   security_group_ids         =  [ "${module.module_vpc.my_redis_sg_id}" ]
   engine_version             = "7.0"
   engine                     = "redis"
-  timeouts = {
+  timeouts {
     create = "30m"
     update = "30m"
     delete = "30m"
@@ -146,7 +146,7 @@ resource "aws_db_instance" "my-master" {
   skip_final_snapshot  = true
   multi_az = false
   backup_retention_period = 7
-  timeouts = {
+  timeouts {
     create = "30m"
     update = "30m"
     delete = "30m"
@@ -163,7 +163,7 @@ resource "aws_db_instance" "my-read-replica" {
   skip_final_snapshot  = true
   multi_az = false
   backup_retention_period = 7
-  timeouts = {
+  timeouts {
     create = "30m"
     update = "30m"
     delete = "30m"
