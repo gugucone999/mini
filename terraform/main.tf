@@ -2,6 +2,12 @@ provider "aws" {
   region  = "ap-northeast-2"
 }
 
+timeouts {
+  create = "30m"
+  update = "30m"
+  delete = "30m"
+}
+
 module "module_ec2" {
   source = "./ec2"
   my_server_ami = "ami-0c6e5afdd23291f73"
