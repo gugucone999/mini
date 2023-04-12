@@ -2,8 +2,6 @@ module "module_vpc" {
   source = "../vpc"
 }
 
-
-
 resource "aws_instance" "Redis_check" {
   count                   = 1
   ami           = var.my_server_ami
@@ -21,7 +19,7 @@ resource "aws_instance" "Redis_check" {
 
 
 resource "aws_instance" "my_django" {
-  count                   = 5
+  count                   = 2
   ami                     = var.my_server_ami
   instance_type           = var.my_server_type
   vpc_security_group_ids  = [ "${module.module_vpc.my_django_sg_id}" ]
@@ -110,7 +108,7 @@ resource "aws_elasticache_replication_group" "ec_replication_group" {
   replication_group_id       =  "ec-replication-group"
   description = "ElastiCache Redis Replication Group"
   node_type                  = "cache.t2.micro"
-  num_cache_clusters      = 3
+  num_cache_clusters         = 2
   automatic_failover_enabled = true
   subnet_group_name          = aws_elasticache_subnet_group.ec_subnet_group.name
   parameter_group_name       = "default.redis7"
