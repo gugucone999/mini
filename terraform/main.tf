@@ -1,5 +1,6 @@
 provider "aws" {
   region  = "ap-northeast-2"
+  timeout = 0
 }
 
 
