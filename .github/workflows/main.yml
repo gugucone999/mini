@@ -23,8 +23,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-
-
     - name: SSH Commands
       uses: appleboy/ssh-action@v0.1.6
       with:
