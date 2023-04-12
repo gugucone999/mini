@@ -141,6 +141,11 @@ resource "aws_db_instance" "my-master" {
   skip_final_snapshot  = true
   multi_az = false
   backup_retention_period = 7
+  timeouts {
+    create = "30m"
+    update = "30m"
+    delete = "30m"
+  }
 }
 
 resource "aws_db_instance" "my-read-replica" {
@@ -153,4 +158,9 @@ resource "aws_db_instance" "my-read-replica" {
   skip_final_snapshot  = true
   multi_az = false
   backup_retention_period = 7
+  timeouts {
+    create = "30m"
+    update = "30m"
+    delete = "30m"
+  }
 }
