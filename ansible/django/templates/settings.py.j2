@@ -156,11 +156,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #     },
 # }
 
- {% set endpoint_address = lookup('file', '/home/ubuntu/elasticache.json') | from_json | json_query('CacheClusters[0].CacheNodes[0].Endpoint.Address') %}
 # 단일로 만들었을때 
-# {% set endpoint_address = lookup('file', '/home/ubuntu/elasticache.json') | from_json | json_query('ReplicationGroups[0].NodeGroups[0].PrimaryEndpoint.Address') %}
-
+# {% set endpoint_address = lookup('file', '/home/ubuntu/elasticache.json') | from_json | json_query('CacheClusters[0].CacheNodes[0].Endpoint.Address') %}
 # 클러스터그룹을 만들어서 사용할때
+{% set endpoint_address = lookup('file', '/home/ubuntu/elasticache.json') | from_json | json_query('ReplicationGroups[0].NodeGroups[0].PrimaryEndpoint.Address') %}
+
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
