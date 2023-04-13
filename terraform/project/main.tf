@@ -19,7 +19,7 @@ resource "aws_instance" "Redis_check" {
 
 
 resource "aws_instance" "my_django" {
-  count                   = 3
+  count                   = 2
   ami                     = var.my_server_ami
   instance_type           = var.my_server_type
   vpc_security_group_ids  = [ "${module.module_vpc.my_django_sg_id}" ]
