@@ -19,7 +19,7 @@ resource "aws_instance" "Redis_check" {
 
 
 resource "aws_instance" "my_django" {
-  count                   = 3
+  count                   = 2
   ami                     = var.my_server_ami
   instance_type           = var.my_server_type
   vpc_security_group_ids  = [ "${module.module_vpc.my_django_sg_id}" ]
@@ -151,21 +151,21 @@ resource "aws_db_instance" "my-master" {
   }
 }
 
-resource "aws_db_instance" "my-read-replica" {
-  count                   = 1
-  vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
-  replicate_source_db = aws_db_instance.my-master.identifier
-  instance_class       = "db.t3.micro"
-  publicly_accessible  = true
-  skip_final_snapshot  = true
-  multi_az = false
-  backup_retention_period = 7
-  tags = {
-    Name  = "mydb-read-replica-${count.index}"
-  }
-  timeouts {
-    create = "30m"
-    update = "30m"
-    delete = "30m"
-  }
-}
+# resource "aws_db_instance" "my-read-replica" {
+#   count                   = 1
+#   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
+#   replicate_source_db = aws_db_instance.my-master.identifier
+#   instance_class       = "db.t3.micro"
+#   publicly_accessible  = true
+#   skip_final_snapshot  = true
+#   multi_az = false
+#   backup_retention_period = 7
+#   tags = {
+#     Name  = "mydb-read-replica-${count.index}"
+#   }
+#   timeouts {
+#     create = "30m"
+#     update = "30m"
+#     delete = "30m"
+#   }
+# }
