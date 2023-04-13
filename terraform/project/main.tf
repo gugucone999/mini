@@ -131,7 +131,7 @@ resource "aws_db_subnet_group" "my_db_subnet_group" {
 resource "aws_db_instance" "my-master" {
   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
   db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
-  allocated_storage    = 20
+  allocated_storage    = 5
   identifier           = "mydb"
   db_name              = "web"
   engine               = "mysql"
@@ -152,14 +152,17 @@ resource "aws_db_instance" "my-master" {
 }
 
 resource "aws_db_instance" "my-read-replica" {
+  count                   = 1
   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
   replicate_source_db = aws_db_instance.my-master.identifier
   instance_class       = "db.t3.micro"
-  identifier           = "my-read-replica"
   publicly_accessible  = true
   skip_final_snapshot  = true
   multi_az = false
   backup_retention_period = 7
+  tags = {
+    Name  = "mydb-read-replica-${count.index}"
+  }
   timeouts {
     create = "30m"
     update = "30m"
