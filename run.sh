@@ -13,4 +13,4 @@ terraform -chdir=project/terraform/ apply -auto-approve -parallelism=10
  aws elasticache describe-replication-groups \
  --replication-group-id ec-replication-group > /home/ubuntu/elasticache.json
 
-ansible-playbook -i project/ansible/aws_rds.yaml -i project/ansible/aws_ec2.yaml  project/ansible/playbook --user ubuntu
+# ansible-playbook -i project/ansible/aws_rds.yaml -i project/ansible/aws_ec2.yaml  project/ansible/playbook --user ubuntu
