@@ -131,7 +131,7 @@ resource "aws_db_subnet_group" "my_db_subnet_group" {
 resource "aws_db_instance" "my-master" {
   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
   db_subnet_group_name   = aws_db_subnet_group.my_db_subnet_group.name
-  allocated_storage    = 5
+  allocated_storage    = 20
   identifier           = "mydb"
   db_name              = "web"
   engine               = "mysql"
