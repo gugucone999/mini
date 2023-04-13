@@ -13,6 +13,7 @@ jobs:
     name: 'Deploy'
     runs-on: ubuntu-latest
     environment: production
+    timeout-minutes: 30
 
     defaults:
       run:
@@ -36,6 +37,6 @@ jobs:
           sudo git clone https://github.com/gugucone999/mini.git tmp
           sudo cp -r tmp/* project/
           sudo ls -al project
-          sudo sh project/run.sh
+          sudo -s sh project/run.sh
           sudo rm -rf tmp
   
