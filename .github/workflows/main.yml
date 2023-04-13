@@ -31,7 +31,7 @@ jobs:
         username: ${{ secrets.AWS_SSH_USERNAME }}
         key: ${{ secrets.AWS_SSH_KEY }}
         port: ${{ secrets.AWS_SSH_PORT }}
-        timeout-minutes: 30
+        command_timeout: 30
         script_stop: true
         script: |
           sudo rm -rf tmp
