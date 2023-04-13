@@ -152,11 +152,10 @@ resource "aws_db_instance" "my-master" {
 }
 
 resource "aws_db_instance" "my-read-replica" {
-  count = 1
   vpc_security_group_ids = [ "${module.module_vpc.my_db_sg_id}" ]
   replicate_source_db = aws_db_instance.my-master.identifier
   instance_class       = "db.t3.micro"
-  identifier           = "my-read-replica-${count.index}"
+  identifier           = "my-read-replica"
   publicly_accessible  = true
   skip_final_snapshot  = true
   multi_az = false
